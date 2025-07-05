@@ -102,3 +102,49 @@ def compute_support_gwn(adj, device=None):
     adj_mx = [asym_adj(adj), asym_adj(np.transpose(adj))]
     support = [torch.tensor(i).to(device) for i in adj_mx]
     return support
+
+def get_similarity_ssc(force_symmetric=False, sparse=False):
+    # 1. 加载邻接矩阵（CSV 文件）
+    adj = pd.read_csv('./data/ssc/SSC_sites_flow_direction.csv', index_col=0).values  # shape [N, N]
+
+    # 2. 如果需要对称化（max(A, A.T)）
+    if force_symmetric:
+        adj = np.maximum(adj, adj.T)
+
+    # 3. 转换为稀疏矩阵（如果模型需要）
+    if sparse:
+        import scipy.sparse as sps
+        adj = sps.coo_matrix(adj)
+
+    return adj
+
+def asym_adj(adj):
+    """
+    Computes the asymmetric normalized adjacency matrix (D_out^{-1} * A).
+
+    Args:
+        adj (numpy.ndarray or scipy.sparse.matrix): The adjacency matrix.
+
+    Returns:
+        numpy.ndarray: The asymmetrically normalized adjacency matrix.
+    """
+    adj = sp.coo_matrix(adj)
+    rowsum = np.array(adj.sum(1)).flatten() # Calculate row sums (out-degrees)
+
+    # --- FIX: Convert rowsum to float type before computing the inverse power. ---
+    # This prevents "ValueError: Integers to negative integer powers are not allowed."
+    # When rowsum is 0, np.power(0.0, -1) will result in inf, which is then handled by the next line.
+    d_inv = np.power(rowsum.astype(np.float32), -1).flatten()
+    # --- END FIX ---
+
+    # Replace inf values (resulting from 1/0) with 0.
+    # This effectively handles nodes with no outgoing edges (degree 0) by making their
+    # inverse degree 0, so they don't contribute to the normalization.
+    d_inv[np.isinf(d_inv)] = 0.
+    
+    # Create a diagonal matrix from the inverse degrees
+    d_mat = sp.diags(d_inv)
+    
+    # Compute D_out^{-1} * A
+    # The result is converted to float32 and then to a dense numpy array.
+    return d_mat.dot(adj).astype(np.float32).todense()

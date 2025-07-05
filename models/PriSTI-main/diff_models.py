@@ -28,6 +28,8 @@ class Guide_diff(nn.Module):
             self.adj = get_similarity_metrla(thr=0.1)
         elif config["adj_file"] == 'pems-bay':
             self.adj = get_similarity_pemsbay(thr=0.1)
+        elif config["adj_file"] == 'ssc':
+            self.adj = get_similarity_ssc()
         self.device = config["device"]
         self.support = compute_support_gwn(self.adj, device=config["device"])
         self.is_adp = config["is_adp"]

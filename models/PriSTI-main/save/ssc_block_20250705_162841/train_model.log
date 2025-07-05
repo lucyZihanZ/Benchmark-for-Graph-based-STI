@@ -1,0 +1,5 @@
+INFO:root:avg_epoch_loss:0.36435254934373534, epoch:0
+INFO:root:avg_epoch_loss:0.2893663639328462, epoch:1
+INFO:root:avg_epoch_loss:0.2861066459744917, epoch:2
+INFO:root:avg_epoch_loss:0.27611950595120466, epoch:3
+INFO:root:avg_epoch_loss:0.26216318998250027, epoch:4

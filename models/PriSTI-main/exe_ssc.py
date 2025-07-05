@@ -7,7 +7,7 @@ import yaml
 import os
 import numpy as np
 
-from dataset_pemsbay import get_dataloader
+from dataset_ssc import get_dataloader_pooled
 from main_model import PriSTI_WaterQuality
 from utils import train, evaluate
 
@@ -24,7 +24,7 @@ def main(args):
 
     config["model"]["is_unconditional"] = args.unconditional
     config["model"]["target_strategy"] = args.targetstrategy
-    config["diffusion"]["adj_file"] = 'pems-bay'
+    config["diffusion"]["adj_file"] = 'ssc'
     config["seed"] = SEED
 
     print(json.dumps(config, indent=4))
@@ -40,10 +40,14 @@ def main(args):
         json.dump(config, f, indent=4)
 
     # 载入数据
-    train_loader, valid_loader, test_loader, scaler, mean_scaler = get_dataloader(
+    # training_missing_pattern == 'target_strategy'
+    train_loader, valid_loader, test_loader, scaler, mean_scaler = get_dataloader_pooled(
         config["train"]["batch_size"], device=args.device, missing_pattern=args.missing_pattern,
         is_interpolate=config["model"]["use_guide"], num_workers=args.num_workers, target_strategy=args.targetstrategy
     )
+    # batch_size=4, device=device, eval_missing_pattern='block',
+     #   train_missing_pattern='block', is_interpolate=True # Enable interpolation
+    
     model = PriSTI_WaterQuality(config, args.device).to(args.device)
 
     if args.modelfolder == "":

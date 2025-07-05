@@ -334,7 +334,8 @@ class PriSTI_WaterQuality(PriSTI):
         observed_tp = batch["timepoints"].to(self.device).float()
         gt_mask = batch["gt_mask"].to(self.device).float()
         cut_length = batch["cut_length"].to(self.device).long()
-        for_pattern_mask = batch["hist_mask"].to(self.device).float()
+        # for_pattern_mask = batch["hist_mask"].to(self.device).float()
+        
         coeffs = None
         if self.config['model']['use_guide']:
             coeffs = batch["coeffs"].to(self.device).float()
@@ -345,7 +346,8 @@ class PriSTI_WaterQuality(PriSTI):
         observed_data = observed_data.permute(0, 2, 1)
         observed_mask = observed_mask.permute(0, 2, 1)
         gt_mask = gt_mask.permute(0, 2, 1)
-        for_pattern_mask = for_pattern_mask.permute(0, 2, 1)
+        # for_pattern_mask = for_pattern_mask.permute(0, 2, 1)
+        for_pattern_mask = observed_mask
         cond_mask = cond_mask.permute(0, 2, 1)
 
         if self.config['model']['use_guide']:
