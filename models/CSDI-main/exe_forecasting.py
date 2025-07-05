@@ -18,7 +18,6 @@ parser.add_argument("--unconditional", action="store_true")
 parser.add_argument("--modelfolder", type=str, default="")
 parser.add_argument("--nsample", type=int, default=100)
 
-
 args = parser.parse_args()
 print(args)
 

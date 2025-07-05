@@ -5,11 +5,10 @@ from diff_models import diff_CSDI
 
 
 class CSDI_base(nn.Module):
-    def __init__(self, target_dim, config, causal_graph, device):
+    def __init__(self, target_dim, config, device):
         super().__init__()
         self.device = device
         self.target_dim = target_dim
-        # self.causal_graph = causal_graph
 
         self.emb_time_dim = config["model"]["timeemb"]
         self.emb_feature_dim = config["model"]["featureemb"]
@@ -27,7 +26,7 @@ class CSDI_base(nn.Module):
         config_diff["side_dim"] = self.emb_total_dim
 
         input_dim = 1 if self.is_unconditional == True else 2
-        self.diffmodel = diff_CSDI(config_diff, causal_graph, input_dim)
+        self.diffmodel = diff_CSDI(config_diff, input_dim)
 
         # parameters for diffusion models
         self.num_steps = config_diff["num_steps"]
@@ -102,19 +101,7 @@ class CSDI_base(nn.Module):
             side_info = torch.cat([side_info, side_mask], dim=1)
 
         return side_info
-    def apply_causal_gcn(self, x):
-        if self.causal_graph is None:
-            return x
-        B, C, K, L = x.shape
-        x = x.permute(0, 3, 2, 1).reshape(B * L, K, C)
-        A = self.causal_graph.to(x.device)  # (K, K)
-        A_hat = A + torch.eye(K).to(x.device)
-        D_hat = torch.diag_embed(A_hat.sum(dim=-1) ** -0.5)
-        A_norm = D_hat @ A_hat @ D_hat
-        x = A_norm @ x  # (B*L, K, C)
-        x = x.reshape(B, L, K, C).permute(0, 3, 2, 1)
-        return x
-        
+
     def calc_loss_valid(
         self, observed_data, cond_mask, observed_mask, side_info, is_train
     ):
@@ -141,7 +128,7 @@ class CSDI_base(nn.Module):
         total_input = self.set_input_to_diffmodel(noisy_data, observed_data, cond_mask)
 
         predicted = self.diffmodel(total_input, side_info, t)  # (B,K,L)
-        predicted = self.apply_causal_gcn(predicted)
+
         target_mask = observed_mask - cond_mask
         residual = (noise - predicted) * target_mask
         num_eval = target_mask.sum()
@@ -157,28 +144,14 @@ class CSDI_base(nn.Module):
             total_input = torch.cat([cond_obs, noisy_target], dim=1)  # (B,2,K,L)
 
         return total_input
-# denoising diffusion probabilistic models(DDPM)
 
     def impute(self, observed_data, cond_mask, side_info, n_samples):
-        """
-        observed_data: batch size * variable * time
-        cond_mask: mask indicating observed values
-        side_info: additional features passed into the diffusion model(e.g. time encoding, graph 
-        embedding)
-        n_samples: number of imputed samples to generate
-        is_unconditional: true means combining noisy conditioned observations and current samples
-        is_unconditional: false means concatenating observed and unobserved parts.
-
-        """
         B, K, L = observed_data.shape
 
         imputed_samples = torch.zeros(B, n_samples, K, L).to(self.device)
 
         for i in range(n_samples):
             # generate noisy observation for unconditional model
-            # unconditional model: noise corruption of input
-            # not use the extra information during the diffusion(adding noise process)
-            # And this is the forward duffusion process
             if self.is_unconditional == True:
                 noisy_obs = observed_data
                 noisy_cond_history = []
@@ -186,10 +159,9 @@ class CSDI_base(nn.Module):
                     noise = torch.randn_like(noisy_obs)
                     noisy_obs = (self.alpha_hat[t] ** 0.5) * noisy_obs + self.beta[t] ** 0.5 * noise
                     noisy_cond_history.append(noisy_obs * cond_mask)
-            # start reverse diffusion process
-            # start from pure noise in the imputation/inference process
+
             current_sample = torch.randn_like(observed_data)
-            # reverse process
+
             for t in range(self.num_steps - 1, -1, -1):
                 if self.is_unconditional == True:
                     diff_input = cond_mask * noisy_cond_history[t] + (1.0 - cond_mask) * current_sample
@@ -199,12 +171,11 @@ class CSDI_base(nn.Module):
                     noisy_target = ((1 - cond_mask) * current_sample).unsqueeze(1)
                     diff_input = torch.cat([cond_obs, noisy_target], dim=1)  # (B,2,K,L)
                 predicted = self.diffmodel(diff_input, side_info, torch.tensor([t]).to(self.device))
-                predicted = self.apply_causal_gcn(predicted) # add causal graph
-            # update current sample using reverse diffusion equation.
+
                 coeff1 = 1 / self.alpha_hat[t] ** 0.5
                 coeff2 = (1 - self.alpha_hat[t]) / (1 - self.alpha[t]) ** 0.5
                 current_sample = coeff1 * (current_sample - coeff2 * predicted)
-            # add noise if not final step
+
                 if t > 0:
                     noise = torch.randn_like(current_sample)
                     sigma = (
@@ -214,7 +185,7 @@ class CSDI_base(nn.Module):
 
             imputed_samples[:, i] = current_sample.detach()
         return imputed_samples
-# to compute the loss during training or validation.
+
     def forward(self, batch, is_train=1):
         (
             observed_data,
@@ -223,7 +194,7 @@ class CSDI_base(nn.Module):
             gt_mask,
             for_pattern_mask,
             _,
-        ) = self.process_data(batch) # unpack and preprocess the data using self.process_data.
+        ) = self.process_data(batch)
         if is_train == 0:
             cond_mask = gt_mask
         elif self.target_strategy != "random":
@@ -263,8 +234,8 @@ class CSDI_base(nn.Module):
 
 
 class CSDI_PM25(CSDI_base):
-    def __init__(self, config, device, causal_graph, target_dim=36):
-        super(CSDI_PM25, self).__init__(target_dim, config, device, causal_graph)
+    def __init__(self, config, device, target_dim=36):
+        super(CSDI_PM25, self).__init__(target_dim, config, device)
 
     def process_data(self, batch):
         observed_data = batch["observed_data"].to(self.device).float()

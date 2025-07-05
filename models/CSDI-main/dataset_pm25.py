@@ -37,12 +37,12 @@ class PM25_Dataset(Dataset):
         self.cut_length = []  # excluded from evaluation targets
 
         df = pd.read_csv(
-            "./data/SampleData/pm25_ground.txt",
+            "./data/pm25/Code/STMVL/SampleData/pm25_ground.txt",
             index_col="datetime",
             parse_dates=True,
         )
         df_gt = pd.read_csv(
-            "./data/SampleData/pm25_missing.txt",
+            "./data/pm25/Code/STMVL/SampleData/pm25_missing.txt",
             index_col="datetime",
             parse_dates=True,
         )

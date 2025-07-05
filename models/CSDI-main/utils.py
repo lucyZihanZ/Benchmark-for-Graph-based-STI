@@ -46,7 +46,7 @@ def train(
                     break
 
             lr_scheduler.step()
-        if valid_loader and (epoch_no + 1) % valid_epoch_interval == 0:
+        if valid_loader is not None and (epoch_no + 1) % valid_epoch_interval == 0:
             model.eval()
             avg_loss_valid = 0
             with torch.no_grad():

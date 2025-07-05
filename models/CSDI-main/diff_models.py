@@ -3,7 +3,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import math
 from linear_attention_transformer import LinearAttentionTransformer
-from causal_layers import GCNLayer
 
 
 def get_torch_trans(heads=8, layers=1, channels=64):
@@ -59,7 +58,7 @@ class DiffusionEmbedding(nn.Module):
 
 
 class diff_CSDI(nn.Module):
-    def __init__(self, config, causal_graph, inputdim=2, k = 17):
+    def __init__(self, config, inputdim=2):
         super().__init__()
         self.channels = config["channels"]
 
@@ -71,8 +70,6 @@ class diff_CSDI(nn.Module):
         self.input_projection = Conv1d_with_init(inputdim, self.channels, 1)
         self.output_projection1 = Conv1d_with_init(self.channels, self.channels, 1)
         self.output_projection2 = Conv1d_with_init(self.channels, 1, 1)
-        self.gcn = GCNLayer(in_channels=self.channels, out_channels=self.channels)
-        self.causal_graph = causal_graph # explicitly define as the adjacent matrix
         nn.init.zeros_(self.output_projection2.weight)
 
         self.residual_layers = nn.ModuleList(
@@ -94,16 +91,7 @@ class diff_CSDI(nn.Module):
         x = x.reshape(B, inputdim, K * L)
         x = self.input_projection(x)
         x = F.relu(x)
-    # for k nodes in each time stamp, we do the neural networks on casual-inference graph models.
-    # this place we add the causal graph into the model
         x = x.reshape(B, self.channels, K, L)
-        x = x.permute(0, 3, 2, 1)  # → (B, L, K, C)
-        x = x.reshape(B * L, K, self.channels)
-
-        # Apply causal graph GCN
-        x = x + self.gcn(x, adj=self.causal_graph)  # (B*L, K, C)
-
-        x = x.reshape(B, L, K, self.channels).permute(0, 3, 2, 1)  # → (B, C, K, L)
 
         diffusion_emb = self.diffusion_embedding(diffusion_step)
 
@@ -118,7 +106,6 @@ class diff_CSDI(nn.Module):
         x = F.relu(x)
         x = self.output_projection2(x)  # (B,1,K*L)
         x = x.reshape(B, K, L)
-
         return x
 
 
@@ -164,7 +151,6 @@ class ResidualBlock(nn.Module):
             y = self.feature_layer(y.permute(2, 0, 1)).permute(1, 2, 0)
         y = y.reshape(B, L, channel, K).permute(0, 2, 3, 1).reshape(B, channel, K * L)
         return y
-    
 
     def forward(self, x, cond_info, diffusion_emb):
         B, channel, K, L = x.shape

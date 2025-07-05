@@ -1,25 +1,0 @@
-/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/torch/nn/modules/transformer.py:282: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.self_attn.batch_first was not True(use batch_first for better inference performance)
-  warnings.warn(f"enable_nested_tensor is True, but self.use_nested_tensor is False because {why_not_sparsity_fast_path}")
-  0%|          | 0/303 [00:00<?, ?it/s]  0%|          | 0/303 [00:00<?, ?it/s]
-Traceback (most recent call last):
-  File "/gpfs/home/rmn3157/CSDI/exe_pm25.py", line 58, in <module>
-    train(
-  File "/gpfs/home/rmn3157/CSDI/utils.py", line 34, in train
-    loss = model(train_batch)
-  File "/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-  File "/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/gpfs/home/rmn3157/CSDI/main_model.py", line 236, in forward
-    side_info = self.get_side_info(observed_tp, cond_mask)
-  File "/gpfs/home/rmn3157/CSDI/main_model.py", line 92, in get_side_info
-    feature_embed = self.embed_layer(
-  File "/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-  File "/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/torch/nn/modules/sparse.py", line 162, in forward
-    return F.embedding(
-  File "/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/torch/nn/functional.py", line 2233, in embedding
-    return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
-RuntimeError: Expected tensor for argument #1 'indices' to have one of the following scalar types: Long, Int; but got torch.cuda.FloatTensor instead (while checking arguments for embedding)
