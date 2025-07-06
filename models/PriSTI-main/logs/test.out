@@ -33,3 +33,14 @@ Namespace(config='traffic.yaml', device='cuda:0', num_workers=2, modelfolder='',
     "seed": 42
 }
 model folder: ./save/ssc_block_20250705_162841/
+
+ best loss is updated to  0.134401544298117 at 119
+
+ best loss is updated to  0.13428099436255603 at 139
+
+ best loss is updated to  0.1296109961775633 at 159
+
+ best loss is updated to  0.12814037908728307 at 199
+RMSE: 90.72786064936682
+MAE: 21.166942061264773
+CRPS: 0.27857120413529246
