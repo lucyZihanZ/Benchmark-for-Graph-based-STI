@@ -260,9 +260,9 @@ class CSDI_PM25(CSDI_base):
         )
 
 
-class CSDI_Physio(CSDI_base):
-    def __init__(self, config, device, target_dim=35):
-        super(CSDI_Physio, self).__init__(target_dim, config, device)
+class CSDI_SSC(CSDI_base):
+    def __init__(self, config, device, target_dim=20):
+        super(CSDI_SSC, self).__init__(target_dim, config, device)
 
     def process_data(self, batch):
         observed_data = batch["observed_data"].to(self.device).float()
@@ -285,7 +285,6 @@ class CSDI_Physio(CSDI_base):
             for_pattern_mask,
             cut_length,
         )
-
 
 
 class CSDI_Forecasting(CSDI_base):
