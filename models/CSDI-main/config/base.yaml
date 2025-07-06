@@ -1,8 +1,5 @@
-
-#type: args
-
 train:
-  epochs: 200
+  epochs: 5
   batch_size: 16 
   lr: 1.0e-3
   itr_per_epoch: 1.0e+8
@@ -23,4 +20,3 @@ model:
   is_unconditional: 0
   timeemb: 128
   featureemb: 16
-  target_strategy: "random"

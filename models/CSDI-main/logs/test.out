@@ -1,0 +1,216 @@
+Using device: cuda
+shape of ob_mask: (8759, 27)
+ob_mask True: 207261
+Length of data for month 2: 672
+Current length for month 2: 637
+masks shape for month (18144,):
+Dimensions of observed_values: [(672, 27)]
+Dimensions of observed_masks: [(672, 27)]
+Dimensions of gt_masks: [(672, 27)]
+Length of data for month 4: 720
+Current length for month 4: 685
+masks shape for month (19440,):
+Dimensions of observed_values: [(672, 27), (720, 27)]
+Dimensions of observed_masks: [(672, 27), (720, 27)]
+Dimensions of gt_masks: [(672, 27), (720, 27)]
+Length of data for month 5: 743
+Current length for month 5: 708
+masks shape for month (20061,):
+Dimensions of observed_values: [(672, 27), (720, 27), (743, 27)]
+Dimensions of observed_masks: [(672, 27), (720, 27), (743, 27)]
+Dimensions of gt_masks: [(672, 27), (720, 27), (743, 27)]
+Length of data for month 7: 744
+Current length for month 7: 709
+masks shape for month (20088,):
+Dimensions of observed_values: [(672, 27), (720, 27), (743, 27), (744, 27)]
+Dimensions of observed_masks: [(672, 27), (720, 27), (743, 27), (744, 27)]
+Dimensions of gt_masks: [(672, 27), (720, 27), (743, 27), (744, 27)]
+Length of data for month 8: 744
+Current length for month 8: 709
+masks shape for month (20088,):
+Dimensions of observed_values: [(672, 27), (720, 27), (743, 27), (744, 27), (744, 27)]
+Dimensions of observed_masks: [(672, 27), (720, 27), (743, 27), (744, 27), (744, 27)]
+Dimensions of gt_masks: [(672, 27), (720, 27), (743, 27), (744, 27), (744, 27)]
+Length of data for month 10: 744
+Current length for month 10: 709
+masks shape for month (20088,):
+Dimensions of observed_values: [(672, 27), (720, 27), (743, 27), (744, 27), (744, 27), (744, 27)]
+Dimensions of observed_masks: [(672, 27), (720, 27), (743, 27), (744, 27), (744, 27), (744, 27)]
+Dimensions of gt_masks: [(672, 27), (720, 27), (743, 27), (744, 27), (744, 27), (744, 27)]
+Length of data for month 11: 720
+Current length for month 11: 685
+masks shape for month (19440,):
+Dimensions of observed_values: [(672, 27), (720, 27), (743, 27), (744, 27), (744, 27), (744, 27), (720, 27)]
+Dimensions of observed_masks: [(672, 27), (720, 27), (743, 27), (744, 27), (744, 27), (744, 27), (720, 27)]
+Dimensions of gt_masks: [(672, 27), (720, 27), (743, 27), (744, 27), (744, 27), (744, 27), (720, 27)]
+shape of ob_mask: (8759, 27)
+ob_mask True: 207261
+Length of data for month 3: 744
+Current length for month 3: 709
+masks shape for month (20088,):
+Dimensions of observed_values: [(744, 27)]
+Dimensions of observed_masks: [(744, 27)]
+Dimensions of gt_masks: [(744, 27)]
+Length of data for month 6: 720
+Current length for month 6: 685
+masks shape for month (19440,):
+Dimensions of observed_values: [(744, 27), (720, 27)]
+Dimensions of observed_masks: [(744, 27), (720, 27)]
+Dimensions of gt_masks: [(744, 27), (720, 27)]
+Length of data for month 9: 720
+Current length for month 9: 685
+masks shape for month (19440,):
+Dimensions of observed_values: [(744, 27), (720, 27), (720, 27)]
+Dimensions of observed_masks: [(744, 27), (720, 27), (720, 27)]
+Dimensions of gt_masks: [(744, 27), (720, 27), (720, 27)]
+Length of data for month 12: 744
+Current length for month 12: 709
+masks shape for month (20088,):
+Dimensions of observed_values: [(744, 27), (720, 27), (720, 27), (744, 27)]
+Dimensions of observed_masks: [(744, 27), (720, 27), (720, 27), (744, 27)]
+Dimensions of gt_masks: [(744, 27), (720, 27), (720, 27), (744, 27)]
+shape of ob_mask: (8759, 27)
+ob_mask True: 207261
+Length of data for month 1: 744
+Current length for month 1: 709
+masks shape for month (20088,):
+Dimensions of observed_values: [(744, 27)]
+Dimensions of observed_masks: [(744, 27)]
+Dimensions of gt_masks: [(744, 27)]
+Testing train_loader...
+Batch keys: dict_keys(['observed_data', 'observed_mask', 'gt_mask', 'hist_mask', 'timepoints', 'cut_length', 'cond_mask'])
+observed_data shape: torch.Size([8, 36, 27])
+observed_mask shape: torch.Size([8, 36, 27])
+gt_mask shape: torch.Size([8, 36, 27])
+hist_mask shape: torch.Size([8, 36, 27])
+cond_mask shape: torch.Size([8, 36, 27])
+cut_length: tensor([0, 0, 0, 0, 0, 0, 0, 0])
+timepoints: tensor([[ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+         18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
+        [ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+         18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
+        [ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+         18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
+        [ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+         18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
+        [ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+         18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
+        [ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+         18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
+        [ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+         18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
+        [ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+         18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35]])
+
+Testing valid_loader...
+observed_data shape: torch.Size([8, 36, 27])
+
+Testing test_loader...
+observed_data shape: torch.Size([8, 36, 27])
+
+Scaler shape: torch.Size([27])
+Mean scaler shape: torch.Size([27])
+Namespace(config='base.yaml', device='cuda:0', seed=1, modelfolder='', targetstrategy='hybrid', missing_pattern='block', dataset='ssc', validationindex=0, nsample=100, unconditional=False, testmissingratio=0.1, weight_decay=1e-06, miu_ntc=0.0, waveblend_interpolation=0, src_adj_file='discharge', tgt_adj_file='pooled', miu_using_mse=1, miu_using_multi_domain=0)
+{
+    "train": {
+        "epochs": 5,
+        "batch_size": 16,
+        "lr": 0.001,
+        "itr_per_epoch": 100000000.0
+    },
+    "diffusion": {
+        "layers": 4,
+        "channels": 64,
+        "nheads": 8,
+        "diffusion_embedding_dim": 128,
+        "beta_start": 0.0001,
+        "beta_end": 0.5,
+        "num_steps": 50,
+        "schedule": "quad",
+        "is_linear": false
+    },
+    "model": {
+        "is_unconditional": 0,
+        "timeemb": 128,
+        "featureemb": 16,
+        "target_strategy": "hybrid",
+        "test_missing_ratio": 0.1,
+        "waveblend_interpolation": 0
+    }
+}
+model folder: ./save/ssc/mse-1_md-0_20250706_152445/
+[[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]]
+[[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]]
+[[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]]
+Beta: [1.00000000e-04 5.86931491e-04 1.47865920e-03 2.77518314e-03
+ 4.47650330e-03 6.58261967e-03 9.09353227e-03 1.20092411e-02
+ 1.53297461e-02 1.90550474e-02 2.31851449e-02 2.77200386e-02
+ 3.26597285e-02 3.80042147e-02 4.37534971e-02 4.99075757e-02
+ 5.64664505e-02 6.34301215e-02 7.07985888e-02 7.85718523e-02
+ 8.67499120e-02 9.53327679e-02 1.04320420e-01 1.13712868e-01
+ 1.23510113e-01 1.33712154e-01 1.44318991e-01 1.55330624e-01
+ 1.66747054e-01 1.78568279e-01 1.90794301e-01 2.03425119e-01
+ 2.16460734e-01 2.29901144e-01 2.43746351e-01 2.57996354e-01
+ 2.72651153e-01 2.87710749e-01 3.03175141e-01 3.19044329e-01
+ 3.35318313e-01 3.51997093e-01 3.69080670e-01 3.86569042e-01
+ 4.04462212e-01 4.22760177e-01 4.41462938e-01 4.60570496e-01
+ 4.80082850e-01 5.00000000e-01]
+Alpha: [9.99900000e-01 9.99313127e-01 9.97835484e-01 9.95066307e-01
+ 9.90611890e-01 9.84091069e-01 9.75142205e-01 9.63431487e-01
+ 9.48662327e-01 9.30585521e-01 9.09009761e-01 8.83811975e-01
+ 8.54946916e-01 8.22455330e-01 7.86470033e-01 7.47219220e-01
+ 7.05026403e-01 6.60306493e-01 6.13557725e-01 5.65349358e-01
+ 5.16305351e-01 4.67084533e-01 4.18358078e-01 3.70785381e-01
+ 3.24989637e-01 2.81534572e-01 2.40903787e-01 2.03484051e-01
+ 1.69553685e-01 1.39276776e-01 1.12703560e-01 8.97768252e-02
+ 7.03436678e-02 5.41715780e-02 4.09674536e-02 3.03979999e-02
+ 2.21099502e-02 1.57486798e-02 1.09740716e-02 7.47285631e-03
+ 4.96707074e-03 3.21867628e-03 2.03072508e-03 1.24570963e-03
+ 7.41867159e-04 4.28235268e-04 2.39185268e-04 1.29023591e-04
+ 6.70815775e-05 3.35407888e-05]
+Alpha Torch shape: torch.Size([50, 1, 1])
+Beta: [1.00000000e-04 5.86931491e-04 1.47865920e-03 2.77518314e-03
+ 4.47650330e-03 6.58261967e-03 9.09353227e-03 1.20092411e-02
+ 1.53297461e-02 1.90550474e-02 2.31851449e-02 2.77200386e-02
+ 3.26597285e-02 3.80042147e-02 4.37534971e-02 4.99075757e-02
+ 5.64664505e-02 6.34301215e-02 7.07985888e-02 7.85718523e-02
+ 8.67499120e-02 9.53327679e-02 1.04320420e-01 1.13712868e-01
+ 1.23510113e-01 1.33712154e-01 1.44318991e-01 1.55330624e-01
+ 1.66747054e-01 1.78568279e-01 1.90794301e-01 2.03425119e-01
+ 2.16460734e-01 2.29901144e-01 2.43746351e-01 2.57996354e-01
+ 2.72651153e-01 2.87710749e-01 3.03175141e-01 3.19044329e-01
+ 3.35318313e-01 3.51997093e-01 3.69080670e-01 3.86569042e-01
+ 4.04462212e-01 4.22760177e-01 4.41462938e-01 4.60570496e-01
+ 4.80082850e-01 5.00000000e-01]
+Alpha: [9.99900000e-01 9.99313127e-01 9.97835484e-01 9.95066307e-01
+ 9.90611890e-01 9.84091069e-01 9.75142205e-01 9.63431487e-01
+ 9.48662327e-01 9.30585521e-01 9.09009761e-01 8.83811975e-01
+ 8.54946916e-01 8.22455330e-01 7.86470033e-01 7.47219220e-01
+ 7.05026403e-01 6.60306493e-01 6.13557725e-01 5.65349358e-01
+ 5.16305351e-01 4.67084533e-01 4.18358078e-01 3.70785381e-01
+ 3.24989637e-01 2.81534572e-01 2.40903787e-01 2.03484051e-01
+ 1.69553685e-01 1.39276776e-01 1.12703560e-01 8.97768252e-02
+ 7.03436678e-02 5.41715780e-02 4.09674536e-02 3.03979999e-02
+ 2.21099502e-02 1.57486798e-02 1.09740716e-02 7.47285631e-03
+ 4.96707074e-03 3.21867628e-03 2.03072508e-03 1.24570963e-03
+ 7.41867159e-04 4.28235268e-04 2.39185268e-04 1.29023591e-04
+ 6.70815775e-05 3.35407888e-05]
+Alpha Torch shape: torch.Size([50, 1, 1])
+Start time: 20250706_152445
+target_model_RMSE: 121.6328646659077
+target_model_MAE: 55.06962857744108
+target_model_CRPS: 9.780805085834704
+End time: 20250706_152735
+Total time: 0h 2min 50.4732s

@@ -1,8 +1,25 @@
-torch
-pandas
-numpy
-tqdm
-pyyaml
-matplotlib
+# Core dependencies
+torch==2.1.0+cu121
+torchvision==0.16.0+cu121
+torchaudio==2.1.0+cu121
+-f https://download.pytorch.org/whl/torch_stable.html
+
+# PyTorch Geometric ecosystem
+torch_geometric
+torch-scatter
+torch-sparse
+-f https://data.pyg.org/whl/torch-2.1.0+cu121.html
+
+# Data science stack
+pandas==1.5.3
+numpy==1.24.4
+tqdm==4.66.1
+pyyaml==6.0
+matplotlib==3.7.1
+scikit-learn==1.2.2
+scipy==1.10.1
+PyWavelets==1.4.1
 wget
-linear_attention_transformer
+
+# Transformer
+linear-attention-transformer
