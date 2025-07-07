@@ -1,0 +1,5 @@
+d_in: 20
+d_model: 128
+d_z: 4
+dropout: 0.2
+inject_noise: true
