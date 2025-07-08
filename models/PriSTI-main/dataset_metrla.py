@@ -65,7 +65,7 @@ class MetrLA_Dataset(Dataset):
 
         df = pd.read_hdf("./data/metr_la/metr_la.h5")
         ob_mask = (df.values != 0.).astype('uint8')
-        SEED = 9101112
+        SEED = 45678
         self.rng = np.random.default_rng(SEED)
         if missing_pattern == 'block':
             eval_mask = sample_mask(shape=(34272, 207), p=0.0015, p_noise=0.05, min_seq=12, max_seq=12 * 4, rng=self.rng)
