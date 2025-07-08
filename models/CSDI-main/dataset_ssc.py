@@ -123,7 +123,7 @@ def sample_mask(shape, p=0.0015, p_noise=0.05, max_seq=1, min_seq=1, rng=None):
 
 
 class Pooled_Dataset(Dataset):
-    def __init__(self, seed = 1, eval_length=16, mode="train", val_len=0.1, test_len=0.2,
+    def __init__(self, seed = 45678, eval_length=16, mode="train", val_len=0.1, test_len=0.2,
                  missing_pattern='block', target_strategy = 'point'): # Added is_interpolate
         """
         Initializes the Pooled_Dataset.
@@ -328,7 +328,7 @@ class Pooled_Dataset(Dataset):
         return len(self.use_index)
 
 
-def get_dataloader_pooled(batch_size, device, seed=1, val_len=0.1, num_workers=4,
+def get_dataloader_pooled(batch_size, device, seed=45678, val_len=0.1, num_workers=4,
                    missing_pattern='block', target_strategy='block'): # Added is_interpolate
     """
     Creates and returns DataLoader instances for training, validation, and testing.

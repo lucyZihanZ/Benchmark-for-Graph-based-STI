@@ -24,18 +24,18 @@ Namespace(config='base.yaml', device='cuda:0', modelfolder='', targetstrategy='m
         "target_strategy": "mix"
     }
 }
-model folder: ./save/ssc_validationindex0_20250707_180203/
+model folder: ./save/ssc_validationindex0_20250708_095334/
 
- best loss is updated to  0.12699908785083713 at 19
+ best loss is updated to  0.10911480183987056 at 19
 
- best loss is updated to  0.11571020676809199 at 39
+ best loss is updated to  0.0986660357345553 at 39
 
- best loss is updated to  0.11091882866971634 at 59
+ best loss is updated to  0.09677790828487452 at 59
 
- best loss is updated to  0.10284521923783947 at 79
+ best loss is updated to  0.08662968216573491 at 79
 
- best loss is updated to  0.10013678089222487 at 99
-RMSE: 93.55926055408064
-MAE: 21.587312315200993
-CRPS: 0.2746994620875308
-CRPS_sum: 26.21967837685033
+ best loss is updated to  0.08340200759908732 at 99
+RMSE: 42.77458948662676
+MAE: 15.188354469879329
+CRPS: 0.17757913940831235
+CRPS_sum: 29.47127171566612
