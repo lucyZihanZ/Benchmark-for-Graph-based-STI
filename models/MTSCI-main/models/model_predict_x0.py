@@ -327,7 +327,7 @@ class MTSCI_base(nn.Module):
 
 class MTSCI(MTSCI_base):
 
-    def __init__(self, config, device, target_dim=36, seq_len=24):
+    def __init__(self, config, device, target_dim=36, seq_len=20):
         super(MTSCI, self).__init__(target_dim, config, device)
         self.seq_len = seq_len
 

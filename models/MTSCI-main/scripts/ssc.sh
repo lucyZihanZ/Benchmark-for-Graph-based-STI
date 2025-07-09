@@ -20,40 +20,40 @@
 #SBATCH --output=/home/rmn3157/MTSCI-main/logs/test.out
 
 #SBATCH --error=/home/rmn3157/MTSCI-main/logs/error.err
+
+# Navigate to project root (MTSCI-main), not into src
 cd ../src
+
 
 python_script="main.py"
 
 scratch=True
 cuda='cuda:0'
-dataset='ETT'
-feature_num=7
-seq_len=24
-missing_pattern='block'
-missing_ratio=0.05
-val_missing_ratio=0.05
-test_missing_ratio=0.05
-dataset_path="../datasets/$dataset/"
-checkpoint_path="../saved_models/ETT/block/0.05/model.pth"
+dataset='ssc_pooled'
+feature_num=20
+seq_len=20
+missing_pattern='point'
+missing_ratio=0.2
+val_missing_ratio=0.2
+test_missing_ratio=0.2
+dataset_path="../datasets/SSC/ssc/$dataset/"
+checkpoint_path="../saved_models/${dataset}_${missing_pattern}_${missing_ratio}_model.pth"
 
+# Keep everything in MTSCI-main root
 if [ $scratch = True ]; then
     log_path="../logs/scratch"
 else
     log_path="../logs/test"
 fi
 
-if [ ! -d "$log_path" ]; then
-    mkdir -p "$log_path"
-    echo "Folder created: $log_path"
-else
-    echo "Folder already exists: $log_path"
-fi
+mkdir -p "$log_path"
 
-for ((i=1; i<=1; i++))
+for ((i=1; i<=5; i++))
 do
     seed=$i
+    echo "🔁 Running seed $seed on device $cuda..."
 
-    echo "Running iteration $i with seed $seed on device $cuda"
+    log_file="$log_path/${dataset}_${missing_pattern}_ms${missing_ratio}_seed${seed}.log"
 
     if [ $scratch = True ]; then
         nohup python -u $python_script \
@@ -66,9 +66,7 @@ do
             --feature $feature_num \
             --missing_pattern $missing_pattern \
             --missing_ratio $missing_ratio \
-            --val_missing_ratio $val_missing_ratio \
-            --test_missing_ratio $test_missing_ratio \
-            > $log_path/${dataset}_${missing_pattern}_ms${missing_ratio}_seed${seed}.log 2>&1 &
+            > "$log_file" 2>&1 &
     else
         nohup python -u $python_script \
             --device $cuda \
@@ -83,10 +81,9 @@ do
             --test_missing_ratio $test_missing_ratio \
             --checkpoint_path $checkpoint_path \
             --nsample 100 \
-            > $log_path/${dataset}_${missing_pattern}_ms${missing_ratio}_seed${seed}.log 2>&1 &
+            > "$log_file" 2>&1 &
     fi
 
     wait
-
     echo ""
 done

@@ -13,12 +13,16 @@ from tqdm import tqdm
 import wandb
 
 
-sys.path.append("../dataloader")
-sys.path.append("../models")
-sys.path.append("../utils")
+# sys.path.append("../dataloader")
+# sys.path.append("../models")
+# sys.path.append("../utils")
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(ROOT_DIR)
 from dataloader import *
-from model import MTSCI
-from utils import *
+from models import diff_block, model
+
+from utils import utils, timefeatures
+# from utils.timefeatures import *
 
 
 def train(
@@ -55,7 +59,6 @@ def train(
         model.train()
         for batch_no, train_batch in enumerate(train_loader):
             optimizer.zero_grad()
-
             loss_noise, loss_cons = model(train_batch)
             loss = alpha * loss_noise + beta * loss_cons  # compute total loss
             loss.backward()
@@ -64,9 +67,9 @@ def train(
             avg_loss_noise += loss_noise.item()
             avg_loss_cons += loss_cons.item()
         lr_scheduler.step()
-        train_loss = avg_loss / batch_no
-        train_loss_noise = avg_loss_noise / batch_no
-        loss_cl = avg_loss_cons / batch_no
+        train_loss = avg_loss / (batch_no +1)
+        train_loss_noise = avg_loss_noise / (batch_no + 1)
+        loss_cl = avg_loss_cons / (batch_no + 1)
 
         if valid_loader is not None and (epoch_no + 1) % valid_epoch_interval == 0:
             model.eval()
@@ -75,7 +78,7 @@ def train(
                 for batch_no, valid_batch in enumerate(valid_loader):
                     loss = model(valid_batch, is_train=0)
                     avg_loss_valid += loss.item()
-                valid_loss = avg_loss_valid / batch_no
+                valid_loss = avg_loss_valid / (batch_no + 1)
                 print(
                     "Epoch {}: train loss = {} train_loss_noise = {} loss_cl = {} valid loss = {}".format(
                         epoch_no + 1,
@@ -89,7 +92,7 @@ def train(
                 best_valid_loss = avg_loss_valid
                 print(
                     "\n best loss is updated to ",
-                    avg_loss_valid / batch_no,
+                    avg_loss_valid / (batch_no + 1),
                     "at",
                     epoch_no,
                 )
@@ -173,7 +176,7 @@ def evaluate(
             results["groundtruth"] = np.concatenate(groundtruth, axis=0)
             results["eval_mask"] = np.concatenate(eval_mask, axis=0)
 
-            mae, rmse, mape, mse, r2 = missed_eval_np(
+            mae, rmse, mape, mse, r2 = utils.missed_eval_np(
                 results["imputed_data"],
                 results["groundtruth"],
                 1 - results["eval_mask"],
@@ -187,7 +190,7 @@ def evaluate(
                 all_generated_samples, dim=0
             )  # (B,nsample,L,K)
 
-            CRPS = calc_quantile_CRPS(
+            CRPS = utils.calc_quantile_CRPS(
                 all_target, all_generated_samples, all_evalpoint, mean_scaler, scaler
             )
             print(
@@ -202,7 +205,7 @@ def main(args):
     current_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
     print(current_time)
 
-    seed_torch(args.seed)
+    utils.seed_torch(args.seed)
     path = "../config/{}_{}.yaml".format(args.dataset, args.missing_pattern)
     with open(path, "r") as f:
         config = yaml.safe_load(f)
@@ -257,18 +260,63 @@ def main(args):
     print("len train dataloader: ", len(train_loader))
     print("len val dataloader: ", len(val_loader))
     print("len test dataloader: ", len(test_loader))
-    with open(dataset_path + "/scaler.pkl", "rb") as fb:
-        mean, std = pk.load(fb)
-    mean = torch.from_numpy(mean).to(args.device)
-    std = torch.from_numpy(std).to(args.device)
+    # with open(dataset_path + "/scaler.pkl", "rb") as fb:
+    #     mean, std = pk.load(fb)
+    # print(mean)
+    # print(std)
+    # mean = np.array(mean).astype(np.float32)
+    # std = np.array(std).astype(np.float32)
+    try:
+        with open(dataset_path + "/scaler.pkl", "rb") as fb:
+            loaded_dict = pk.load(fb)
 
-    model = MTSCI(
+        # --- END OF ADDED/MOVED PRINT STATEMENTS ---
+
+        # Attempt to convert to NumPy array.
+        # This will work if loaded_mean/std are floats, lists, or already NumPy arrays.
+        # It will fail if they are literally the string 'mean' or 'std'.
+        mean = loaded_dict['mean']
+        std = loaded_dict['std']
+        # mean = mean.astype(np.float32)
+        # std = std.astype(np.float32)
+
+        # # Now, convert the NumPy arrays to PyTorch tensors
+        # mean = torch.from_numpy(mean).to(args.device)
+        # std = torch.from_numpy(std).to(args.device)
+        if isinstance(mean, np.ndarray):
+            mean = mean.astype(np.float32)
+            mean = torch.from_numpy(mean).to(args.device)
+        else:
+            mean = mean.to(torch.float32).to(args.device)
+
+        if isinstance(std, np.ndarray):
+            std = std.astype(np.float32)
+            std = torch.from_numpy(std).to(args.device)
+        else:
+            std = std.to(torch.float32).to(args.device)
+
+    except ValueError as e:
+        # This specific error indicates that loaded_mean/std are not numerical
+        # and cannot be converted to float (e.g., they are the string 'mean').
+        print(f"Error loading scaler.pkl: {e}")
+        print("It seems 'mean' or 'std' loaded from scaler.pkl are not numerical values.")
+        print("Please ensure your scaler.pkl file contains actual numerical mean and std values,")
+        print("not the string labels 'mean' and 'std'.")
+        print("You might need to regenerate your scaler.pkl file with correct numerical data.")
+        # Exit or handle the error appropriately, as the program cannot proceed without scalers
+        raise # Re-raise the exception to stop execution
+        
+
+    # mean = torch.from_numpy(mean).to(args.device)
+    # std = torch.from_numpy(std).to(args.device)
+
+    mtsci_model = model.MTSCI(
         config, args.device, target_dim=args.feature, seq_len=args.seq_len
     ).to(args.device)
 
     if args.scratch:
         train(
-            model,
+            mtsci_model,
             config["train"],
             args,
             train_loader,
@@ -277,15 +325,15 @@ def main(args):
             current_time=current_time,
         )
         print("load model from", saving_path)
-        model.load_state_dict(
+        mtsci_model.load_state_dict(
             torch.load(saving_path + "/model_{}.pth".format(current_time))
         )
     else:
         print("load model from", args.checkpoint_path)
-        model.load_state_dict(torch.load(args.checkpoint_path))
+        mtsci_model.load_state_dict(torch.load(args.checkpoint_path))
 
     evaluate(
-        model,
+        mtsci_model,
         test_loader,
         nsample=args.nsample,
         scaler=std,
@@ -301,7 +349,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--dataset_path",
         type=str,
-        default="../datasets/ETT/raw_data/",
+        default="../datasets/SSC/ssc/ssc_pooled/",
     )
     parser.add_argument(
         "--save_result_path",
@@ -315,14 +363,14 @@ if __name__ == "__main__":
     parser.add_argument(
         "--checkpoint_path",
         type=str,
-        default="../saved_models/test/ETTm1/point/0.2/model.pth",
+        default="../saved_models/test/ssc/point/0.2/model.pth",
     )
     parser.add_argument("--seq_len", type=int, default=24, help="sequence length")
-    parser.add_argument("--feature", help="feature nums", type=int, default=7)
+    parser.add_argument("--feature", help="feature nums", type=int, default=20)
     parser.add_argument(
         "--missing_pattern",
         type=str,
-        default="point",
+        default="block",
         help="missing pattern on training set",
     )
     parser.add_argument(

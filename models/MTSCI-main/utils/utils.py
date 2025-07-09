@@ -46,7 +46,7 @@ def random_obs_mask(X, M, p):
 
 
 def sample_mask(
-    shape, p=0.0015, p_noise=0.05, max_seq=1, min_seq=1, rng=None
+    shape, p=0.0015, p_noise=0.005, max_seq=1, min_seq=1, rng=None
 ):  # block missing, point missing
     if rng is None:
         rand = np.random.random
