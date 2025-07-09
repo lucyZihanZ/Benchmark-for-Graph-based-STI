@@ -95,7 +95,7 @@ def sample_mask(shape, p=0.0015, p_noise=0.05, max_seq=1, min_seq=1, rng=None):
         max_seq (int): Maximum length of a missing block.
         min_seq (int): Minimum length of a missing block.
         rng (numpy.random.Generator): Random number generator for reproducibility.
-
+        
     Returns:
         numpy.ndarray: A uint8 mask where 1 indicates missing, 0 indicates observed.
     """
@@ -276,8 +276,8 @@ class Pooled_Dataset(Dataset):
 
         if self.mode != 'train':
             # For validation/test, cond_mask is derived from gt_mask with additional dropout
-            rand_mask = (torch.rand_like(gt_mask) > 0.1).float()  # 10% dropout
-            cond_mask = gt_mask * rand_mask
+            # rand_mask = (torch.rand_like(gt_mask) > 0.1).float()  # 10% dropout
+            cond_mask = gt_mask
             eval_mask = (gt_mask - cond_mask).clamp(min=0.0)
         else:
             # For training, cond_mask is generated based on train_missing_pattern

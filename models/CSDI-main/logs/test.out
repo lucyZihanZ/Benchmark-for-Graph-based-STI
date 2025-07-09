@@ -1,4 +1,4 @@
-Namespace(config='base.yaml', device='cuda:0', modelfolder='', targetstrategy='mix', validationindex=0, nsample=100, unconditional=False)
+Namespace(config='base.yaml', device='cuda:0', modelfolder='', targetstrategy='block', validationindex=0, nsample=100, unconditional=False)
 {
     "train": {
         "epochs": 100,
@@ -21,21 +21,19 @@ Namespace(config='base.yaml', device='cuda:0', modelfolder='', targetstrategy='m
         "is_unconditional": false,
         "timeemb": 128,
         "featureemb": 16,
-        "target_strategy": "mix"
+        "target_strategy": "block"
     }
 }
-model folder: ./save/ssc_validationindex0_20250708_095334/
+model folder: ./save/ssc_validationindex0_20250708_223231/
 
- best loss is updated to  0.10911480183987056 at 19
+ best loss is updated to  0.13501298471408732 at 19
 
- best loss is updated to  0.0986660357345553 at 39
+ best loss is updated to  0.13205293785123265 at 59
 
- best loss is updated to  0.09677790828487452 at 59
+ best loss is updated to  0.1224009114153245 at 79
 
- best loss is updated to  0.08662968216573491 at 79
-
- best loss is updated to  0.08340200759908732 at 99
-RMSE: 42.77458948662676
-MAE: 15.188354469879329
-CRPS: 0.17757913940831235
-CRPS_sum: 29.47127171566612
+ best loss is updated to  0.115594963378766 at 99
+RMSE: 47.805046302067794
+MAE: 18.655520165872854
+CRPS: 0.2181416059795179
+CRPS_sum: 23.758650930304277
