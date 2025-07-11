@@ -1,13 +1,13 @@
-Namespace(config='base.yaml', device='cuda:0', modelfolder='', validationindex=0, nsample=100, unconditional=False, targetstrategy='random', missing_pattern='point')
+Namespace(config='base.yaml', device='cuda:0', modelfolder='', validationindex=0, nsample=100, unconditional=False, targetstrategy='random', missing_pattern='block')
 {
     "train_VAE": {
-        "epochs": 200,
+        "epochs": 100,
         "batch_size": 16,
         "lr": 0.001,
         "itr_per_epoch": 100000000.0
     },
     "train_diffussion": {
-        "epochs": 200,
+        "epochs": 100,
         "batch_size": 16,
         "lr": 0.001,
         "itr_per_epoch": 100000000.0
@@ -42,7 +42,7 @@ Namespace(config='base.yaml', device='cuda:0', modelfolder='', validationindex=0
         "use_guide": true
     }
 }
-model folder: ./save/ssc_validationindex0_20250710_152000/
+model folder: ./save/ssc_validationindex0_20250710_230240/
 df.values dtype: float32
 train_mean: [ 52.161274  98.78705   61.998238  78.45829   80.60945   53.660244
   78.93433   24.534267  54.83393   51.854767  56.45361   34.53151
@@ -124,41 +124,29 @@ train_std dtype: <class 'numpy.ndarray'> float32
  [-0.9786391  -0.55485535 -0.5799058  ... -0.7262141  -0.59841096
   -0.89635086]]
 
- best loss is updated to  0.000633964518783614 at 19
+ best loss is updated to  0.0028790123215003405 at 19
 
- best loss is updated to  0.00023520307877333835 at 39
+ best loss is updated to  0.002395512732618954 at 39
 
- best loss is updated to  5.265875597615377e-05 at 59
+ best loss is updated to  0.00019215091015212238 at 59
 
- best loss is updated to  1.7660992511991935e-05 at 79
+ best loss is updated to  6.120522959918162e-05 at 79
 
- best loss is updated to  6.413914661607123e-06 at 99
-
- best loss is updated to  5.634602402437849e-06 at 139
-
- best loss is updated to  1.3571880117524415e-06 at 159
-
- best loss is updated to  1.193087319606434e-06 at 179
-
- best loss is updated to  1.1440129874529248e-06 at 199
+ best loss is updated to  5.618058582967933e-05 at 99
 
 ########################  begin diffussioh    ######################################
-model folder: ./save/ssc_validationindex0_20250710_153526/
+model folder: ./save/ssc_validationindex0_20250710_230959/
 
- best loss is updated to  0.07413069624453783 at 19
+ best loss is updated to  0.07440713257528841 at 19
 
- best loss is updated to  0.06604462733957916 at 39
+ best loss is updated to  0.07070771313738078 at 39
 
- best loss is updated to  0.06286165793426335 at 59
+ best loss is updated to  0.06294563412666321 at 59
 
- best loss is updated to  0.061796189402230084 at 79
+ best loss is updated to  0.05922251055017114 at 79
 
- best loss is updated to  0.06161779572721571 at 119
-
- best loss is updated to  0.05993274075444788 at 139
-
- best loss is updated to  0.05457873351406306 at 159
-RMSE: 58.775393303432004
-MAE: 16.84314554576825
-CRPS: 0.2296003542448345
-CRPS_sum: 22.290347450657894
+ best loss is updated to  0.05896673060487956 at 99
+RMSE: 40.18191424211968
+MAE: 16.93832898310079
+CRPS: 0.2367660120913857
+CRPS_sum: 31.70992881373355
