@@ -1,0 +1,63 @@
+/home/rmn3157/.conda/envs/grin/lib/python3.8/site-packages/pytorch_lightning/core/decorators.py:65: LightningDeprecationWarning: The `@auto_move_data` decorator is deprecated in v1.3 and will be removed in v1.5. Please use `trainer.predict` instead for inference. The decorator was applied to `forward`
+  rank_zero_deprecation(
+Global seed set to 519399110
+/gpfs/home/rmn3157/grin/datasets/water_quality.py:150: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  adj = pd.read_csv(adj_file_path, index_col = 0, parse_dates=True).values
+/home/rmn3157/.conda/envs/grin/lib/python3.8/site-packages/pytorch_lightning/core/datamodule.py:174: LightningDeprecationWarning: DataModule property `has_setup_fit` was deprecated in v1.4 and will be removed in v1.6.
+  rank_zero_deprecation("DataModule property `has_setup_fit` was deprecated in v1.4 and will be removed in v1.6.")
+/home/rmn3157/.conda/envs/grin/lib/python3.8/site-packages/deprecate/deprecation.py:115: LightningDeprecationWarning: The `Metric` was deprecated since v1.3.0 in favor of `torchmetrics.metric.Metric`. It will be removed in v1.5.0.
+  stream(template_mgs % msg_args)
+/home/rmn3157/.conda/envs/grin/lib/python3.8/site-packages/deprecate/deprecation.py:115: LightningDeprecationWarning: The `MetricCollection` was deprecated since v1.3.0 in favor of `torchmetrics.collections.MetricCollection`. It will be removed in v1.5.0.
+  stream(template_mgs % msg_args)
+/home/rmn3157/.conda/envs/grin/lib/python3.8/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:446: UserWarning: Checkpoint directory /gpfs/home/rmn3157/grin/logs/ssc_block/grin/2025-07-17_00-03-27_519399110 exists and is not empty.
+  rank_zero_warn(f"Checkpoint directory {dirpath} exists and is not empty.")
+GPU available: True, used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+/home/rmn3157/.conda/envs/grin/lib/python3.8/site-packages/pytorch_lightning/core/datamodule.py:423: LightningDeprecationWarning: DataModule.setup has already been called, so it will not be called again. In v1.6 this behavior will change to always call DataModule.setup.
+  rank_zero_deprecation(
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+Set SLURM handle signals.
+
+  | Name          | Type             | Params
+---------------------------------------------------
+0 | loss_fn       | MaskedMetric     | 0     
+1 | train_metrics | MetricCollection | 0     
+2 | val_metrics   | MetricCollection | 0     
+3 | test_metrics  | MetricCollection | 0     
+4 | model         | GRINet           | 188 K 
+---------------------------------------------------
+188 K     Trainable params
+0         Non-trainable params
+188 K     Total params
+0.756     Total estimated model params size (MB)
+/home/rmn3157/.conda/envs/grin/lib/python3.8/site-packages/pytorch_lightning/trainer/data_loading.py:105: UserWarning: The dataloader, val dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 64 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  rank_zero_warn(
+/gpfs/home/rmn3157/grin/data_process/imputation_dataset.py:39: UserWarning: where received a uint8 condition tensor. This behavior is deprecated and will be removed in a future version of PyTorch. Use a boolean condition instead. (Triggered internally at ../aten/src/ATen/native/TensorCompare.cpp:530.)
+  res['x'] = torch.where(res['mask'], res['x'], torch.zeros_like(res['x']))
+Global seed set to 519399110
+/home/rmn3157/.conda/envs/grin/lib/python3.8/site-packages/pytorch_lightning/trainer/data_loading.py:105: UserWarning: The dataloader, train dataloader, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 64 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  rank_zero_warn(
+scripts/run_imputation.py:551: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  filler.load_state_dict(torch.load(checkpoint_callback.best_model_path,
+/home/rmn3157/.conda/envs/grin/lib/python3.8/site-packages/pytorch_lightning/utilities/cloud_io.py:33: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  return torch.load(f, map_location=map_location)
+/home/rmn3157/.conda/envs/grin/lib/python3.8/site-packages/pytorch_lightning/core/datamodule.py:423: LightningDeprecationWarning: DataModule.prepare_data has already been called, so it will not be called again. In v1.6 this behavior will change to always call DataModule.prepare_data.
+  rank_zero_deprecation(
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+/home/rmn3157/.conda/envs/grin/lib/python3.8/site-packages/pytorch_lightning/trainer/data_loading.py:105: UserWarning: The dataloader, test dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 64 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  rank_zero_warn(
+Traceback (most recent call last):
+  File "/home/rmn3157/.conda/envs/grin/lib/python3.8/site-packages/pandas/core/indexing.py", line 1618, in _get_list_axis
+    return self.obj._take_with_is_copy(key, axis=axis)
+  File "/home/rmn3157/.conda/envs/grin/lib/python3.8/site-packages/pandas/core/generic.py", line 3948, in _take_with_is_copy
+    result = self._take(indices=indices, axis=axis)
+  File "/home/rmn3157/.conda/envs/grin/lib/python3.8/site-packages/pandas/core/generic.py", line 3932, in _take
+    new_data = self._mgr.take(
+  File "/home/rmn3157/.conda/envs/grin/lib/python3.8/site-packages/pandas/core/internals/managers.py", line 960, in take
+    indexer = maybe_convert_indices(indexer, n, verify=verify)
+  File "/home/rmn3157/.conda/envs/grin/lib/python3.8/site-packages/pandas/core/indexers/utils.py", line 284, in maybe_convert_indices
+    raise IndexError("indices are out-of-bounds")
+IndexError: indices are out-of-bounds
+
+The above exception was the direct cause of the following exception:
