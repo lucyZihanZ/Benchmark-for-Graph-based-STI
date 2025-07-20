@@ -1,4 +1,4 @@
-Namespace(config='traffic.yaml', device='cuda:0', num_workers=2, modelfolder='', targetstrategy='block', nsample=100, seed=45678, unconditional=False, missing_pattern='block')
+Namespace(config='traffic.yaml', device='cuda:0', num_workers=2, modelfolder='', targetstrategy='block', nsample=100, seed=123, unconditional=False, missing_pattern='block')
 {
     "train": {
         "epochs": 200,
@@ -30,15 +30,19 @@ Namespace(config='traffic.yaml', device='cuda:0', num_workers=2, modelfolder='',
         "use_guide": true,
         "mask_sensor": []
     },
-    "seed": 45678
+    "seed": 123
 }
-model folder: ./save/ssc_block_20250708_104707/
+model folder: ./save/ssc_block_20250716_104516/
 
- best loss is updated to  0.12413104755374102 at 119
+ best loss is updated to  0.12618095507988564 at 119
 
- best loss is updated to  0.11826884179161146 at 159
+ best loss is updated to  0.12412190110637591 at 139
 
- best loss is updated to  0.11792464961226169 at 199
-RMSE: 48.60657482243898
-MAE: 18.826294357093914
-CRPS: 0.22342957948383532
+ best loss is updated to  0.11489476618858484 at 159
+
+ best loss is updated to  0.11444341614842415 at 179
+
+ best loss is updated to  0.113804241671012 at 199
+RMSE: 50.572138186428475
+MAE: 19.322989582503816
+CRPS: 0.2593791610316226

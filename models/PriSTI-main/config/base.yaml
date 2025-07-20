@@ -2,7 +2,7 @@
 #type: args
 
 train:
-  epochs: 200
+  epochs: 300
   batch_size: 16
   lr: 1.0e-3
   valid_epoch_interval: 5
@@ -26,6 +26,6 @@ model:
   is_unconditional: 0
   timeemb: 128
   featureemb: 16
-  target_strategy: "hybrid"
+  target_strategy: "block"
   use_guide: true
   mask_sensor: []

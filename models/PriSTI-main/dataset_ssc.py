@@ -124,7 +124,7 @@ def sample_mask(shape, p=0.0015, p_noise=0.05, max_seq=1, min_seq=1, rng=None):
 
 class Pooled_Dataset(Dataset):
     def __init__(self, seed=45678, eval_length=16, mode="train", val_len=0.1, test_len=0.2,
-                 missing_pattern='block', target_strategy = 'point',
+                 missing_pattern='point', target_strategy = 'point',
                  is_interpolate=False): # Added is_interpolate
         """
         Initializes the Pooled_Dataset.
@@ -193,7 +193,7 @@ class Pooled_Dataset(Dataset):
         if missing_pattern== 'block':
             eval_mask = sample_mask(shape=(num_time_steps, num_features), p=0.0015, p_noise=0.05, min_seq=12, max_seq=12 * 4, rng=self.rng)
         elif missing_pattern == 'point':
-            eval_mask = sample_mask(shape=(num_time_steps, num_features), p=0.01, p_noise=0.25, max_seq=12, min_seq=12 * 4, rng=self.rng)
+            eval_mask = sample_mask(shape=(num_time_steps, num_features), p=0.01, p_noise=0.25, min_seq=12, max_seq=12 * 4, rng=self.rng)
         
         # gt_mask: Ground truth mask. 1 where data is observed AND NOT hidden by eval_mask.
         # This means, values that are originally observed AND are NOT part of the evaluation missingness.
@@ -330,7 +330,7 @@ class Pooled_Dataset(Dataset):
         return len(self.use_index)
 
 
-def get_dataloader_pooled(batch_size, device, seed=45678, val_len=0.1, num_workers=4,
+def get_dataloader_pooled(batch_size, device, seed=45678, val_len=0.1, num_workers=16,
                    missing_pattern='block', is_interpolate=False, target_strategy='block'): # Added is_interpolate
     """
     Creates and returns DataLoader instances for training, validation, and testing.

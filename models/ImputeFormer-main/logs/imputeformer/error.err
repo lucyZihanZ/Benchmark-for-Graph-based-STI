@@ -1,0 +1,63 @@
+[rank: 0] Seed set to 42
+/gpfs/home/rmn3157/ImputeFormer-main/experiments/tsl/datasets/prototypes/mixin.py:183: FutureWarning: Timedelta.delta is deprecated and will be removed in a future version.
+  mapping = {un: pd.to_timedelta('1' + un).delta
+/gpfs/home/rmn3157/ImputeFormer-main/experiments/tsl/datasets/prototypes/mixin.py:186: FutureWarning: Timedelta.delta is deprecated and will be removed in a future version.
+  mapping['week'] = pd.to_timedelta('1W').delta
+/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/pytorch_lightning/utilities/parsing.py:209: Attribute 'loss_fn' is an instance of `nn.Module` and is already saved during checkpointing. It is recommended to ignore them using `self.save_hyperparameters(ignore=['loss_fn'])`.
+/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/lightning_fabric/connector.py:571: `precision=16` is supported for historical reasons but its usage is discouraged. Please set your precision to 16-mixed instead!
+/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/lightning_fabric/plugins/environments/slurm.py:204: The `srun` command is available on your system but is not used. HINT: If your intention is to run Lightning on SLURM, prepend your python command with `srun` like so: srun python ./experiments/run_spatiotemporal_imputation.py --con ...
+Using 16bit Automatic Mixed Precision (AMP)
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+You are using a CUDA device ('NVIDIA A100-SXM4-80GB') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:658: Checkpoint directory /gpfs/home/rmn3157/ImputeFormer-main/log/ssc/imputeformer/20250719T225012_42 exists and is not empty.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name          | Type              | Params | Mode 
+------------------------------------------------------------
+0 | loss_fn       | MaskedMetric      | 0      | train
+1 | train_metrics | MetricCollection  | 0      | train
+2 | val_metrics   | MetricCollection  | 0      | train
+3 | test_metrics  | MetricCollection  | 0      | train
+4 | model         | ImputeFormerModel | 914 K  | train
+------------------------------------------------------------
+914 K     Trainable params
+0         Non-trainable params
+914 K     Total params
+3.660     Total estimated model params size (MB)
+123       Modules in train mode
+0         Modules in eval mode
+/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:425: The 'val_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=9` in the `DataLoader` to improve performance.
+/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:425: The 'train_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=9` in the `DataLoader` to improve performance.
+`Trainer.fit` stopped: `max_epochs=100` reached.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:425: The 'test_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=9` in the `DataLoader` to improve performance.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:425: The 'predict_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=9` in the `DataLoader` to improve performance.
+Traceback (most recent call last):
+  File "/gpfs/home/rmn3157/ImputeFormer-main/./experiments/run_spatiotemporal_imputation.py", line 360, in <module>
+    run_experiment(args)
+  File "/gpfs/home/rmn3157/ImputeFormer-main/./experiments/run_spatiotemporal_imputation.py", line 347, in run_experiment
+    output = trainer.predict(imputer, dataloaders=dm.test_dataloader(
+  File "/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/pytorch_lightning/trainer/trainer.py", line 887, in predict
+    return call._call_and_handle_interrupt(
+  File "/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/pytorch_lightning/trainer/call.py", line 48, in _call_and_handle_interrupt
+    return trainer_fn(*args, **kwargs)
+  File "/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/pytorch_lightning/trainer/trainer.py", line 928, in _predict_impl
+    results = self._run(model, ckpt_path=ckpt_path)
+  File "/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/pytorch_lightning/trainer/trainer.py", line 1012, in _run
+    results = self._run_stage()
+  File "/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/pytorch_lightning/trainer/trainer.py", line 1051, in _run_stage
+    return self.predict_loop.run()
+  File "/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/pytorch_lightning/loops/utilities.py", line 179, in _decorator
+    return loop_run(self, *args, **kwargs)
+  File "/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/pytorch_lightning/loops/prediction_loop.py", line 131, in run
+    return self.on_run_end()
+  File "/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/pytorch_lightning/loops/prediction_loop.py", line 203, in on_run_end
+    results = self._on_predict_epoch_end()
+  File "/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/pytorch_lightning/loops/prediction_loop.py", line 370, in _on_predict_epoch_end
+    call._call_lightning_module_hook(trainer, "on_predict_epoch_end")
+  File "/home/rmn3157/.conda/envs/dgdi_compatible/lib/python3.9/site-packages/pytorch_lightning/trainer/call.py", line 176, in _call_lightning_module_hook
+    output = fn(*args, **kwargs)
+TypeError: on_predict_epoch_end() missing 1 required positional argument: 'results'

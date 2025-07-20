@@ -1,0 +1,15 @@
+INFO:root:avg_epoch_loss:0.35791810080094677, epoch:0
+INFO:root:avg_epoch_loss:0.28763220440360565, epoch:1
+INFO:root:avg_epoch_loss:0.27606652348934974, epoch:2
+INFO:root:avg_epoch_loss:0.2770469219184123, epoch:3
+INFO:root:avg_epoch_loss:0.2784117299961201, epoch:4
+INFO:root:avg_epoch_loss:0.26308254024037453, epoch:5
+INFO:root:avg_epoch_loss:0.2509713373029062, epoch:6
+INFO:root:avg_epoch_loss:0.2678817367566286, epoch:7
+INFO:root:avg_epoch_loss:0.24806055139931005, epoch:8
+INFO:root:avg_epoch_loss:0.2561194776333397, epoch:9
+INFO:root:avg_epoch_loss:0.24825252419856342, epoch:10
+INFO:root:avg_epoch_loss:0.2494266469558143, epoch:11
+INFO:root:avg_epoch_loss:0.2427297803801229, epoch:12
+INFO:root:avg_epoch_loss:0.24317688462894238, epoch:13
+INFO:root:avg_epoch_loss:0.24287537776153803, epoch:14

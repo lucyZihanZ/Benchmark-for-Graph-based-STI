@@ -397,7 +397,7 @@ def main(params: dict):
 
 
     try:
-        model = torch.load(model_path, map_location=config.device)
+        model = torch.load(model_path, map_location=config.device, weights_only = True)
         print('best model loaded from: <<', model_path)
     except Exception as err:
         print(err)

@@ -239,6 +239,153 @@ class SpaDependLearning(nn.Module):
         y = self.norm2(y)
         return y
 
+class Chomp(nn.Module):
+    def __init__(self, chomp_size):
+        super().__init__()
+        self.chomp_size = chomp_size
+    def forward(self, x):
+        return x[:, :, :, : -self.chomp_size]
+
+#特征矩阵输入，时间关系
+class TcnBlock(nn.Module):
+    def __init__(self, c_in, c_out, kernel_size, dilation_size=1, droupout=0.0):
+        super().__init__()
+        self.kernel_size = kernel_size
+        self.dilation_size = dilation_size
+        self.padding = (self.kernel_size - 1) * self.dilation_size
+
+        self.conv = nn.Conv2d(c_in, c_out, kernel_size=(3, self.kernel_size), padding=(1, self.padding), dilation=(1, self.dilation_size))
+
+        self.chomp = Chomp(self.padding)
+        self.drop =  nn.Dropout(droupout)
+
+        self.net = nn.Sequential(self.conv, self.chomp, self.drop)
+
+        self.shortcut = nn.Conv2d(c_in, c_out, kernel_size=(1, 1)) if c_in != c_out else None
+
+
+    def forward(self, x):
+        # x: (B, C_in, V, T) -> (B, C_out, V, T)
+        out = self.net(x)
+        x_skip = x if self.shortcut is None else self.shortcut(x)
+
+        return out + x_skip
+
+try:
+    from torch import irfft
+    from torch import rfft
+except ImportError:
+    def rfft(x, d):
+        t = torch.fft.fft(x, dim=(-d))
+        r = torch.stack((t.real, t.imag), -1)
+        return r
+
+
+    def irfft(x, d):
+        t = torch.fft.ifft(torch.complex(x[:, :, 0], x[:, :, 1]), dim=(-d))
+        return t.real
+def dct(x, norm=None):
+    x_shape = x.shape
+    N = x_shape[-1]
+    x = x.contiguous().view(-1, N)
+
+    v = torch.cat([x[:, ::2], x[:, 1::2].flip([1])], dim=1)
+
+    # Vc = torch.fft.rfft(v, 1, onesided=False)
+    Vc = rfft(v, 1)
+
+    k = - torch.arange(N, dtype=x.dtype, device=x.device)[None, :] * np.pi / (2 * N)
+    W_r = torch.cos(k)
+    W_i = torch.sin(k)
+
+    V = Vc[:, :, 0] * W_r - Vc[:, :, 1] * W_i
+
+    if norm == 'ortho':
+        V[:, 0] /= np.sqrt(N) * 2
+        V[:, 1:] /= np.sqrt(N / 2) * 2
+
+    V = 2 * V.view(*x_shape)
+
+    return V
+class dct_channel_block(nn.Module):
+    def __init__(self, channel):
+        super(dct_channel_block, self).__init__()
+        self.fc = nn.Sequential(
+            nn.Linear(channel, channel * 2, bias=False),
+            nn.Dropout(p=0.1),
+            nn.ReLU(inplace=True),
+            nn.Linear(channel * 2, channel, bias=False),
+            nn.Sigmoid()
+        )
+
+        self.dct_norm = nn.LayerNorm([64], eps=1e-6)  # for lstm on length-wise
+
+    def forward(self, x):
+        b, c, l = x.size()  # (B,C,L)
+        list = []
+        for i in range(c):
+            freq = dct(x[:, i, :])
+            # print("freq-shape:",freq.shape)
+            list.append(freq)
+
+        stack_dct = torch.stack(list, dim=1)
+        stack_dct = torch.tensor(stack_dct)
+        lr_weight = self.dct_norm(stack_dct)
+        lr_weight = self.fc(stack_dct)
+        lr_weight = self.dct_norm(lr_weight)
+
+        return x * lr_weight  # result
+
+
+class CrossAttention(nn.Module):
+    def __init__(
+            self,
+            dim,
+            num_heads=8,
+            qkv_bias=False,
+            attn_drop=0.,
+            proj_drop=0.,
+    ):
+        super().__init__()
+        self.num_heads = num_heads
+        head_dim = dim // num_heads
+        self.scale = head_dim ** -0.5
+
+        # Linear layers for query, key, and value projections
+        self.wq = nn.Linear(dim, dim, bias=qkv_bias)
+        self.wk = nn.Linear(dim, dim, bias=qkv_bias)
+        self.wv = nn.Linear(dim, dim, bias=qkv_bias)
+
+        # Dropout for attention and projection layers
+        self.attn_drop = nn.Dropout(attn_drop)
+        self.proj = nn.Linear(dim, dim)
+        self.proj_drop = nn.Dropout(proj_drop)
+
+    def forward(self, query, key_value):
+        B, N, C = query.shape  # N is the sequence length, C is the embedding dimension
+
+        # Check if the key_value has the same shape
+        assert key_value.shape == query.shape, "query and key_value must have the same shape."
+
+        # Project query, key, and value using linear layers
+        q = self.wq(query).reshape(B, N, self.num_heads, C // self.num_heads).permute(0, 2, 1, 3)
+        k = self.wk(key_value).reshape(B, N, self.num_heads, C // self.num_heads).permute(0, 2, 1, 3)
+        v = self.wv(key_value).reshape(B, N, self.num_heads, C // self.num_heads).permute(0, 2, 1, 3)
+
+        # Compute scaled dot-product attention
+        attn = (q @ k.transpose(-2, -1)) * self.scale  # Shape: [B, num_heads, N, N]
+        attn = attn.softmax(dim=-1)
+        attn = self.attn_drop(attn)
+
+        # Apply attention to value vectors
+        x = (attn @ v).transpose(1, 2).reshape(B, N, C)
+
+        # Project and apply dropout
+        x = self.proj(x)
+        x = self.proj_drop(x)
+
+        return x
+
 
 class GuidanceConstruct(nn.Module):
     def __init__(self, channels, nheads, target_dim, order, include_self, device, is_adp, adj_file, proj_t):
@@ -246,12 +393,16 @@ class GuidanceConstruct(nn.Module):
         self.GCN = AdaptiveGCN(channels, order=order, include_self=include_self, device=device, is_adp=is_adp, adj_file=adj_file)
         self.attn_s = Attn_spa(dim=channels, seq_len=target_dim, k=proj_t, heads=nheads)
         self.attn_t = Attn_tem(heads=nheads, layers=1, channels=channels)
+        self.tcn = TcnBlock(64,64,3)
         self.norm1_local = nn.GroupNorm(4, channels)
         self.norm1_attn_s = nn.GroupNorm(4, channels)
         self.norm1_attn_t = nn.GroupNorm(4, channels)
+        
         self.ff_linear1 = nn.Linear(channels, channels * 2)
         self.ff_linear2 = nn.Linear(channels * 2, channels)
+        self.dct = dct_channel_block(64)
         self.norm2 = nn.GroupNorm(4, channels)
+        self.cross_attn = CrossAttention(64,8)
 
 
     def forward(self, y, base_shape, support):

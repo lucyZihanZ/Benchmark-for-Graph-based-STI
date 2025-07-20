@@ -83,7 +83,7 @@ if __name__ == '__main__':
         "--targetstrategy", type=str, default="block", choices=["mix", "random", "block"]
     )
     parser.add_argument("--nsample", type=int, default=100)
-    parser.add_argument("--seed", type=int, default=45678)
+    parser.add_argument("--seed", type=int, default=123)
     parser.add_argument("--unconditional", action="store_true")
     parser.add_argument("--missing_pattern", type=str, default="block")     # block|point
 

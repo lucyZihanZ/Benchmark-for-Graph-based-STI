@@ -1,0 +1,2 @@
+/home/rmn3157/.conda/envs/diff/lib/python3.10/site-packages/nni/runtime/trial_command_channel/standalone.py:34: RuntimeWarning: [1m[31mRunning trial code without runtime. Please check the tutorial if you are new to NNI: [33mhttps://nni.readthedocs.io/en/stable/tutorials/hpo_quickstart_pytorch/main.html[0m
+  warnings.warn(warning_message, RuntimeWarning)

@@ -17,8 +17,8 @@
 
 #SBATCH --account=p32880
 
-#SBATCH --output=/home/rmn3157/PriSTI-main/logs/test.out
+#SBATCH --output=/home/rmn3157/PriSTI-main/logs2/test.out
 
-#SBATCH --error=/home/rmn3157/PriSTI-main/logs/error.err
+#SBATCH --error=/home/rmn3157/PriSTI-main/logs2/error.err
 
 python exe_ssc.py --device 'cuda:0' --num_workers 2

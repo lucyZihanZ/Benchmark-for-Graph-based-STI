@@ -1,0 +1,46 @@
+Namespace(config='traffic.yaml', device='cuda:0', num_workers=2, modelfolder='', targetstrategy='block', nsample=100, seed=123, unconditional=False, missing_pattern='block')
+{
+    "train": {
+        "epochs": 200,
+        "batch_size": 4,
+        "lr": 0.001,
+        "valid_epoch_interval": 20,
+        "is_lr_decay": true
+    },
+    "diffusion": {
+        "layers": 4,
+        "channels": 64,
+        "nheads": 8,
+        "diffusion_embedding_dim": 128,
+        "beta_start": 0.0001,
+        "beta_end": 0.2,
+        "num_steps": 50,
+        "schedule": "quad",
+        "is_adp": true,
+        "proj_t": 64,
+        "is_cross_t": true,
+        "is_cross_s": true,
+        "adj_file": "ssc"
+    },
+    "model": {
+        "is_unconditional": false,
+        "timeemb": 128,
+        "featureemb": 16,
+        "target_strategy": "block",
+        "use_guide": true,
+        "mask_sensor": []
+    },
+    "seed": 123
+}
+model folder: ./save/ssc_block_20250716_164149/
+
+ best loss is updated to  0.12893678843975068 at 119
+
+ best loss is updated to  0.1276292030627911 at 139
+
+ best loss is updated to  0.11392062357985057 at 159
+
+ best loss is updated to  0.11229732139752462 at 199
+RMSE: 46.40343927001301
+MAE: 17.26715170246908
+CRPS: 0.20569901717336556
