@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/gpfs/home/rmn3157/MTSCI-main/src/main.py", line 21, in <module>
+    from models.model import MTSCI
+ModuleNotFoundError: No module named 'models'

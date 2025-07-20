@@ -1,0 +1,165 @@
+Namespace(device='cuda:0', dataset='ssc_pooled', dataset_path='../datasets/SSC/ssc/ssc_pooled/', save_result_path='../results/', saving_path='../saved_models', checkpoint_path='../saved_models/test/ssc/point/0.2/model.pth', seq_len=20, feature=20, missing_pattern='point', missing_ratio=0.2, val_missing_ratio=0.2, test_missing_ratio=0.2, scratch=True, nsample=100, seed=2)
+2025-07-08-23-43-26
+{
+    "train": {
+        "epochs": 300,
+        "batch_size": 16,
+        "lr": 0.001,
+        "alpha": 1,
+        "beta": 5
+    },
+    "diffusion": {
+        "seqlen": 20,
+        "layers": 4,
+        "channels": 64,
+        "nheads": 8,
+        "diffusion_embedding_dim": 128,
+        "beta_start": 0.0001,
+        "beta_end": 0.5,
+        "num_steps": 50,
+        "schedule": "quad"
+    },
+    "model": {
+        "timeemb": 128,
+        "featureemb": 16
+    }
+}
+Train: original missing ratio = 0.0000, artificial missing ratio = 0.1992, artificial missing pattern: point, overall missing ratio = 0.1992
+train samples: 94
+val: original missing ratio = 0.0000, artificial missing ratio = 0.2005, artificial missing pattern: point, overall missing ratio = 0.2005
+val samples: 13
+test: original missing ratio = 0.0000, artificial missing ratio = 0.2069, artificial missing pattern: point, overall missing ratio = 0.2069
+test samples: 27
+len train dataloader:  6
+len val dataloader:  1
+len test dataloader:  2
+/home/rmn3157/.conda/envs/mtsci/lib/python3.10/site-packages/torch/nn/modules/transformer.py:382: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.self_attn.batch_first was not True(use batch_first for better inference performance)
+  warnings.warn(
+Epoch 1: train loss = 3.8480085134506226 train_loss_noise = 0.9486256639162699 loss_cl = 0.57987658927838
+Epoch 2: train loss = 0.8676583071549734 train_loss_noise = 0.6971491475900015 loss_cl = 0.03410183250283202
+Epoch 3: train loss = 0.5909170160690943 train_loss_noise = 0.5256854246060053 loss_cl = 0.013046318587536613
+Epoch 4: train loss = 0.5322815080483755 train_loss_noise = 0.49156420926253 loss_cl = 0.008143459601948658
+Epoch 5: train loss = 0.44228220482667285 train_loss_noise = 0.4048056701819102 loss_cl = 0.007495307674010594 valid loss = 0.387216180562973
+
+ best loss is updated to  0.387216180562973 at 4
+Epoch 6: train loss = 0.4374657024939855 train_loss_noise = 0.4108567436536153 loss_cl = 0.005321790891078611
+Epoch 7: train loss = 0.3240428964296977 train_loss_noise = 0.30390797307093936 loss_cl = 0.004026984873538216
+Epoch 8: train loss = 0.40553441892067593 train_loss_noise = 0.36977338542540866 loss_cl = 0.007152205682359636
+Epoch 9: train loss = 0.4048630545536677 train_loss_noise = 0.3754215141137441 loss_cl = 0.005888307273077468
+Epoch 10: train loss = 0.39529664317766827 train_loss_noise = 0.36558738847573596 loss_cl = 0.00594185230632623 valid loss = 0.2801420986652374
+
+ best loss is updated to  0.2801420986652374 at 9
+Epoch 11: train loss = 0.3402380843957265 train_loss_noise = 0.3240880270799001 loss_cl = 0.003230012759255866
+Epoch 12: train loss = 0.3492534210284551 train_loss_noise = 0.33414003004630405 loss_cl = 0.003022677459133168
+Epoch 13: train loss = 0.3076167826851209 train_loss_noise = 0.292623204489549 loss_cl = 0.0029987163143232465
+Epoch 14: train loss = 0.3202013274033864 train_loss_noise = 0.30699097116788227 loss_cl = 0.002642072271555662
+Epoch 15: train loss = 0.36402741571267444 train_loss_noise = 0.35007411738236743 loss_cl = 0.002790658036246896 valid loss = 0.27530840039253235
+
+ best loss is updated to  0.27530840039253235 at 14
+Epoch 16: train loss = 0.3171846717596054 train_loss_noise = 0.30518273760875064 loss_cl = 0.0024003859531755247
+Epoch 17: train loss = 0.33973491688569385 train_loss_noise = 0.32561396062374115 loss_cl = 0.002824191159258286
+Epoch 18: train loss = 0.3353652010361354 train_loss_noise = 0.3208312789599101 loss_cl = 0.002906784570465485
+Epoch 19: train loss = 0.3492371514439583 train_loss_noise = 0.3342936510841052 loss_cl = 0.002988699998240918
+Epoch 20: train loss = 0.3476209342479706 train_loss_noise = 0.33126504719257355 loss_cl = 0.003271175955887884 valid loss = 0.24039489030838013
+
+ best loss is updated to  0.24039489030838013 at 19
+Epoch 21: train loss = 0.299020454287529 train_loss_noise = 0.2852487588922183 loss_cl = 0.0027543383572871485
+Epoch 22: train loss = 0.30716043959061307 train_loss_noise = 0.2954514001806577 loss_cl = 0.0023418080915386477
+Epoch 23: train loss = 0.27180980890989304 train_loss_noise = 0.2589326227704684 loss_cl = 0.0025754378099615374
+Epoch 24: train loss = 0.24996860325336456 train_loss_noise = 0.23881272226572037 loss_cl = 0.0022311765351332724
+Epoch 25: train loss = 0.2415264149506887 train_loss_noise = 0.2299531102180481 loss_cl = 0.0023146612414469323 valid loss = 0.2068651169538498
+
+ best loss is updated to  0.2068651169538498 at 24
+Epoch 26: train loss = 0.2578570370872815 train_loss_noise = 0.24677670995394388 loss_cl = 0.002216065302491188
+Epoch 27: train loss = 0.2902962217728297 train_loss_noise = 0.2792041649421056 loss_cl = 0.0022184112070438764
+Epoch 28: train loss = 0.2603098874290784 train_loss_noise = 0.24805105105042458 loss_cl = 0.0024517670002145073
+Epoch 29: train loss = 0.2805183505018552 train_loss_noise = 0.2691695764660835 loss_cl = 0.002269755369828393
+Epoch 30: train loss = 0.22449235121409097 train_loss_noise = 0.21162445346514383 loss_cl = 0.0025735806363324323 valid loss = 0.20118367671966553
+
+ best loss is updated to  0.20118367671966553 at 29
+Epoch 31: train loss = 0.2564104323585828 train_loss_noise = 0.24575020124514899 loss_cl = 0.002132046346863111
+Epoch 32: train loss = 0.2656596153974533 train_loss_noise = 0.25406818961103755 loss_cl = 0.0023182856966741383
+Epoch 33: train loss = 0.253963865339756 train_loss_noise = 0.24284637967745462 loss_cl = 0.002223496810377886
+Epoch 34: train loss = 0.2525950123866399 train_loss_noise = 0.24400271847844124 loss_cl = 0.0017184580598647396
+Epoch 35: train loss = 0.2151264250278473 train_loss_noise = 0.20381580293178558 loss_cl = 0.0022621245589107275 valid loss = 0.19212667644023895
+
+ best loss is updated to  0.19212667644023895 at 34
+Epoch 36: train loss = 0.2282942458987236 train_loss_noise = 0.21715748061736426 loss_cl = 0.0022273532037312784
+Epoch 37: train loss = 0.2459478328625361 train_loss_noise = 0.236519622306029 loss_cl = 0.0018856422393582761
+Epoch 38: train loss = 0.26107290635506314 train_loss_noise = 0.25082837293545407 loss_cl = 0.0020489075880808136
+Epoch 39: train loss = 0.252608319123586 train_loss_noise = 0.24286841104427973 loss_cl = 0.001947981499445935
+Epoch 40: train loss = 0.26163605103890103 train_loss_noise = 0.2520497391621272 loss_cl = 0.0019172615526864927 valid loss = 0.17398782074451447
+
+ best loss is updated to  0.17398782074451447 at 39
+Epoch 41: train loss = 0.229372908671697 train_loss_noise = 0.21972519904375076 loss_cl = 0.0019295418169349432
+Epoch 42: train loss = 0.2602446377277374 train_loss_noise = 0.2411294480164846 loss_cl = 0.003823037550318986
+Epoch 43: train loss = 0.22979131589333215 train_loss_noise = 0.2203618437051773 loss_cl = 0.0018858933860125642
+Epoch 44: train loss = 0.21775345504283905 train_loss_noise = 0.20866026108463606 loss_cl = 0.001818638644181192
+Epoch 45: train loss = 0.21481858814756075 train_loss_noise = 0.20621340349316597 loss_cl = 0.0017210372413198154 valid loss = 0.16348476707935333
+
+ best loss is updated to  0.16348476707935333 at 44
+Epoch 46: train loss = 0.1957931605478128 train_loss_noise = 0.18794092535972595 loss_cl = 0.0015704466689688463
+Epoch 47: train loss = 0.1994348019361496 train_loss_noise = 0.19091150164604187 loss_cl = 0.0017046607099473476
+Epoch 48: train loss = 0.21280862390995026 train_loss_noise = 0.20431471119324365 loss_cl = 0.0016987825705048938
+Epoch 49: train loss = 0.22194278985261917 train_loss_noise = 0.2131857176621755 loss_cl = 0.0017514148106177647
+Epoch 50: train loss = 0.18115157634019852 train_loss_noise = 0.17341293270389238 loss_cl = 0.0015477287815883756 valid loss = 0.1629783809185028
+
+ best loss is updated to  0.1629783809185028 at 49
+Epoch 51: train loss = 0.16487021247545877 train_loss_noise = 0.15713482350111008 loss_cl = 0.0015470781751597922
+Epoch 52: train loss = 0.1677815206348896 train_loss_noise = 0.16025017636517683 loss_cl = 0.0015062689781188965
+Epoch 53: train loss = 0.20814605553944907 train_loss_noise = 0.20027668525775275 loss_cl = 0.0015738744987174869
+Epoch 54: train loss = 0.1912450318535169 train_loss_noise = 0.18360028664271036 loss_cl = 0.0015289487782865763
+Epoch 55: train loss = 0.21803579727808634 train_loss_noise = 0.21040781339009604 loss_cl = 0.0015255968125226598 valid loss = 0.15063057839870453
+
+ best loss is updated to  0.15063057839870453 at 54
+Epoch 56: train loss = 0.18996501713991165 train_loss_noise = 0.18200541039307913 loss_cl = 0.0015919212213096519
+Epoch 57: train loss = 0.17233387380838394 train_loss_noise = 0.16472484916448593 loss_cl = 0.0015218048356473446
+Epoch 58: train loss = 0.19107486680150032 train_loss_noise = 0.18356837208072344 loss_cl = 0.0015012992080301046
+Epoch 59: train loss = 0.20658031975229582 train_loss_noise = 0.197235689808925 loss_cl = 0.0018689256976358593
+Epoch 60: train loss = 0.1849695717295011 train_loss_noise = 0.17759256809949875 loss_cl = 0.0014754004466036956 valid loss = 0.14456556737422943
+
+ best loss is updated to  0.14456556737422943 at 59
+Epoch 61: train loss = 0.21366621678074202 train_loss_noise = 0.2064306599398454 loss_cl = 0.001447110572674622
+Epoch 62: train loss = 0.19542949895064035 train_loss_noise = 0.18753280118107796 loss_cl = 0.0015793403144925833
+Epoch 63: train loss = 0.21557734906673431 train_loss_noise = 0.20729796836773554 loss_cl = 0.0016558760738310714
+Epoch 64: train loss = 0.1612094851831595 train_loss_noise = 0.15434069062272707 loss_cl = 0.0013737585783625643
+Epoch 65: train loss = 0.1691253955165545 train_loss_noise = 0.16154582301775613 loss_cl = 0.0015159144919986527 valid loss = 0.145247682929039
+Epoch 66: train loss = 0.23002909744779268 train_loss_noise = 0.2215801514685154 loss_cl = 0.0016897891570503514
+Epoch 67: train loss = 0.19876583417256674 train_loss_noise = 0.19111621007323265 loss_cl = 0.0015299244162937005
+Epoch 68: train loss = 0.1803733209768931 train_loss_noise = 0.17274524147311845 loss_cl = 0.0015256163314916193
+Epoch 69: train loss = 0.18138096357385317 train_loss_noise = 0.17376682658990225 loss_cl = 0.0015228273308215041
+Epoch 70: train loss = 0.19276507943868637 train_loss_noise = 0.18544109662373862 loss_cl = 0.001464796931638072 valid loss = 0.1416378915309906
+
+ best loss is updated to  0.1416378915309906 at 69
+Epoch 71: train loss = 0.21107368792096773 train_loss_noise = 0.20298468445738158 loss_cl = 0.0016178010458437104
+Epoch 72: train loss = 0.22499029835065207 train_loss_noise = 0.2162567488849163 loss_cl = 0.0017467099629963438
+Epoch 73: train loss = 0.1590890772640705 train_loss_noise = 0.1518633278707663 loss_cl = 0.0014451491103197138
+Epoch 74: train loss = 0.14012161021431288 train_loss_noise = 0.13316698744893074 loss_cl = 0.0013909242503965895
+Epoch 75: train loss = 0.1921697954336802 train_loss_noise = 0.18495821704467139 loss_cl = 0.0014423162598783772 valid loss = 0.1331857591867447
+
+ best loss is updated to  0.1331857591867447 at 74
+Epoch 76: train loss = 0.18549231688181558 train_loss_noise = 0.17784607534607252 loss_cl = 0.0015292486059479415
+Epoch 77: train loss = 0.19668597479661307 train_loss_noise = 0.18931365261475244 loss_cl = 0.001474463982352366
+Epoch 78: train loss = 0.1952915738026301 train_loss_noise = 0.18789185086886087 loss_cl = 0.001479944873911639
+Epoch 79: train loss = 0.2768734817703565 train_loss_noise = 0.2685489331682523 loss_cl = 0.0016649091655078034
+Epoch 80: train loss = 0.19309220711390176 train_loss_noise = 0.18503006299336752 loss_cl = 0.0016124284981439512 valid loss = 0.13009381294250488
+
+ best loss is updated to  0.13009381294250488 at 79
+Epoch 81: train loss = 0.14374657968680063 train_loss_noise = 0.136379304031531 loss_cl = 0.0014734552629912894
+Epoch 82: train loss = 0.17309496800104776 train_loss_noise = 0.16634835054477057 loss_cl = 0.0013493241276592016
+Epoch 83: train loss = 0.18986203521490097 train_loss_noise = 0.18229510138432184 loss_cl = 0.0015133864362724125
+Epoch 84: train loss = 0.20560133581360182 train_loss_noise = 0.19769261653224626 loss_cl = 0.0015817440192525585
+Epoch 85: train loss = 0.19064140816529593 train_loss_noise = 0.1831404243906339 loss_cl = 0.0015001959400251508 valid loss = 0.1264948546886444
+
+ best loss is updated to  0.1264948546886444 at 84
+Epoch 86: train loss = 0.19703497365117073 train_loss_noise = 0.18961596861481667 loss_cl = 0.0014838007627986372
+Epoch 87: train loss = 0.15329011157155037 train_loss_noise = 0.14567353079716364 loss_cl = 0.0015233163139782846
+Epoch 88: train loss = 0.19374986986319223 train_loss_noise = 0.1865106150507927 loss_cl = 0.0014478516338082652
+Epoch 89: train loss = 0.13602324575185776 train_loss_noise = 0.12933202584584555 loss_cl = 0.0013382439695609112
+Epoch 90: train loss = 0.21728096902370453 train_loss_noise = 0.20939623564481735 loss_cl = 0.0015769475527728598 valid loss = 0.12529540061950684
+
+ best loss is updated to  0.12529540061950684 at 89
+Epoch 91: train loss = 0.18473407626152039 train_loss_noise = 0.1775021900733312 loss_cl = 0.0014463770979394515
+Epoch 92: train loss = 0.1518673300743103 train_loss_noise = 0.1451536938548088 loss_cl = 0.0013427266385406256
+Epoch 93: train loss = 0.19131691257158914 train_loss_noise = 0.18407460922996202 loss_cl = 0.0014484595934239526
+Epoch 94: train loss = 0.16898914674917856 train_loss_noise = 0.16209283719460169 loss_cl = 0.0013792618992738426
