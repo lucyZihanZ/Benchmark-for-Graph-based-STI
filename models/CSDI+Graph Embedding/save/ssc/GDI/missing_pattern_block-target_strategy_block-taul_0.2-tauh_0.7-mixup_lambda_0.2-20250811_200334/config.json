@@ -1,0 +1,32 @@
+{
+    "train": {
+        "epochs": 1,
+        "batch_size": 16,
+        "lr": 0.001,
+        "itr_per_epoch": 100000000.0
+    },
+    "diffusion": {
+        "layers": 4,
+        "channels": 64,
+        "nheads": 8,
+        "diffusion_embedding_dim": 128,
+        "beta_start": 0.0001,
+        "beta_end": 0.5,
+        "num_steps": 50,
+        "schedule": "quad",
+        "is_linear": false,
+        "target_dim": 20,
+        "device": "cuda:0",
+        "num_nodes": 20
+    },
+    "model": {
+        "is_unconditional": 0,
+        "timeemb": 128,
+        "featureemb": 16,
+        "target_strategy": "block",
+        "waveblend_interpolation": 1,
+        "graphemb": 20,
+        "graph_emb_init": "data/ssc/graph_emb_init.npy",
+        "graphemb_trainable": true
+    }
+}
